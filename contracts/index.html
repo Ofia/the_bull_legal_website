@@ -450,6 +450,18 @@
       line-height: 1.7;
     }
 
+    .process-shot {
+      position: relative;
+      margin-top: 32px;
+      height: 440px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 20px 48px rgba(15,20,25,0.08);
+    }
+
+    .process-shot:hover .carousel-arrow { opacity: 1; }
+
     /* ── WHO IT'S FOR ── */
     #who {
       background: var(--bg2);
@@ -702,6 +714,7 @@
     .cm-wrap { max-width: 1080px; margin: 56px auto 0; padding: 0 48px; }
 
     .cm-frame {
+      position: relative;
       border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
       box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06), 0 32px 80px rgba(0,0,0,0.07);
     }
@@ -713,7 +726,21 @@
     }
     .cm-dot { width: 11px; height: 11px; border-radius: 50%; }
 
-    .cm-body { height: 560px; background: #f5f5f3; display: flex; flex-direction: column; font-family: var(--sans); overflow: hidden; }
+    .cm-body { height: 560px; background: #f5f5f3; font-family: var(--sans); overflow: hidden; }
+
+    /* ── carousel ── */
+    .carousel-slide { display: none; width: 100%; height: 100%; }
+    .carousel-slide.active { display: flex; }
+    .carousel-slide > img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+    .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity 0.18s; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .carousel-arrow svg { width: 16px; height: 16px; stroke: #1c1c1c; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .carousel-arrow.prev { left: 12px; }
+    .carousel-arrow.next { right: 12px; }
+    .cm-frame:hover .carousel-arrow { opacity: 1; }
+    .carousel-arrow:hover { background: #fff; border-color: #c0c0ba; }
+    .carousel-nav { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 16px; }
+    .carousel-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); border: none; cursor: pointer; padding: 0; flex-shrink: 0; transition: background 0.18s; }
+    .carousel-dot.active { background: var(--accent); }
 
     /* TopBar */
     .cm-topbar {
@@ -1209,168 +1236,19 @@
     <div class="node-item"><div class="node-dot" style="background:#3a9e6e"></div>document</div>
   </div>
 
-  <!-- ── APP MOCKUP ── -->
+  <!-- ── APP MOCKUP: LAUNCH VIDEO ── -->
   <div class="cm-wrap">
     <div class="cm-frame">
-
-      <!-- macOS chrome -->
       <div class="cm-chrome">
         <div class="cm-dot" style="background:#ff5f57"></div>
         <div class="cm-dot" style="background:#febc2e"></div>
         <div class="cm-dot" style="background:#28c840"></div>
       </div>
-
-      <!-- App shell -->
       <div class="cm-body">
-
-        <!-- TopBar -->
-        <div class="cm-topbar">
-          <div class="cm-logo-block">
-            <span class="cm-logo-text">The Bull</span>
-          </div>
-          <div class="cm-avatar">OF</div>
-        </div>
-
-        <!-- Main area: sidebar + dashboard + right toolbar -->
-        <div class="cm-main">
-
-          <!-- Left sidebar -->
-          <div class="cm-sidebar">
-            <div class="cm-sb-sec">Workspace</div>
-            <div class="cm-sb-item">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-              Home
-            </div>
-            <div class="cm-sb-item active">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Contracts
-            </div>
-            <div class="cm-sb-item">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-              Elle AI
-            </div>
-            <div class="cm-sb-sec">Contracts</div>
-            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#2563eb"></div><span class="cm-sb-contract-lbl">Rivera Purchase Agmt</span></div>
-            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#b38600"></div><span class="cm-sb-contract-lbl">BioTech Vendor Deal</span></div>
-            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#16a34a"></div><span class="cm-sb-contract-lbl">Torres NDA</span></div>
-            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#dc2626"></div><span class="cm-sb-contract-lbl">Hartmann Lease</span></div>
-          </div>
-
-          <!-- Dashboard -->
-          <div class="cm-dash">
-
-            <!-- Contract header -->
-            <div class="cm-dash-contract-hdr">
-              <span class="cm-dash-back">← Contracts</span>
-              <span class="cm-dash-title">Rivera Purchase Agreement</span>
-              <span class="cm-dash-badge blue">● Active</span>
-              <span class="cm-dash-badge muted">Purchase and Sale</span>
-            </div>
-
-            <!-- Tabs: Overview / Obligations / Reports -->
-            <div class="cm-contract-tabs">
-              <div class="cm-ctab active">Overview</div>
-              <div class="cm-ctab">Obligations</div>
-              <div class="cm-ctab">Reports</div>
-            </div>
-
-            <!-- Overview tab content -->
-            <div class="cm-content">
-
-              <!-- 3-col: Overview | Parties | Contract Health -->
-              <div class="cm-grid cm-g3">
-                <div class="cm-card">
-                  <div class="cm-ct">Overview</div>
-                  <div class="cm-kdr"><span class="cm-kdl">Type</span><span class="cm-kdrv">Purchase and Sale</span></div>
-                  <div class="cm-kdr"><span class="cm-kdl">Jurisdiction</span><span class="cm-kdrv">New York</span></div>
-                  <div class="cm-kdr"><span class="cm-kdl">Date</span><span class="cm-kdrv">Mar 15, 2026</span></div>
-                  <div class="cm-kdr"><span class="cm-kdl">Value</span><span class="cm-kdrv">$1,240,000</span></div>
-                </div>
-                <div class="cm-card">
-                  <div class="cm-ct">Parties</div>
-                  <div class="cm-pr">Seller</div>
-                  <div class="cm-pn">Rivera Holdings LLC</div>
-                  <div class="cm-pr">Buyer</div>
-                  <div class="cm-pn">Arredondo Capital</div>
-                </div>
-                <!-- Contract Health donut — chart colors, NOT status colors -->
-                <div class="cm-card" style="display:flex;flex-direction:column;align-items:center;">
-                  <div class="cm-ct" style="align-self:flex-start;width:100%;">Contract Health</div>
-                  <svg width="64" height="64" viewBox="0 0 60 60" style="margin:2px 0 4px;">
-                    <circle cx="30" cy="30" r="22" fill="none" stroke="rgba(28,28,28,0.07)" stroke-width="5"/>
-                    <!-- Confirmed 60% → slot 1: #29a8c8 (sky teal) — 138.2×0.60=82.9 -->
-                    <circle cx="30" cy="30" r="22" fill="none" stroke="#29a8c8" stroke-width="5" stroke-dasharray="82.9 138.2" stroke-dashoffset="0" transform="rotate(-90 30 30)"/>
-                    <!-- Overdue 10% → slot 2: #e5602a (burnt orange) — 138.2×0.10=13.8 -->
-                    <circle cx="30" cy="30" r="22" fill="none" stroke="#e5602a" stroke-width="5" stroke-dasharray="13.8 138.2" stroke-dashoffset="-82.9" transform="rotate(-90 30 30)"/>
-                    <!-- Pending 30% → slot 3: #1c3e52 (dark navy) — 138.2×0.30=41.5 -->
-                    <circle cx="30" cy="30" r="22" fill="none" stroke="#1c3e52" stroke-width="5" stroke-dasharray="41.5 138.2" stroke-dashoffset="-96.7" transform="rotate(-90 30 30)"/>
-                  </svg>
-                  <div style="width:100%">
-                    <div class="cm-legrow"><div class="cm-pdot" style="background:#29a8c8"></div><span class="cm-leglbl">Confirmed</span><span class="cm-legval">6</span></div>
-                    <div class="cm-legrow"><div class="cm-pdot" style="background:#e5602a"></div><span class="cm-leglbl">Overdue</span><span class="cm-legval">1</span></div>
-                    <div class="cm-legrow"><div class="cm-pdot" style="background:#1c3e52"></div><span class="cm-leglbl">Pending</span><span class="cm-legval">3</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Financial obligations -->
-              <div class="cm-sec"><span class="cm-sec-lbl">Financial Obligations</span><div class="cm-sec-hr"></div></div>
-              <div class="cm-card">
-                <div class="cm-ob-row">
-                  <div class="cm-ob-dot" style="background:#16a34a"></div>
-                  <div class="cm-ob-content">
-                    <div class="cm-ob-title">Earnest Money Deposit</div>
-                    <div class="cm-ob-meta">Arredondo Capital · upon execution</div>
-                  </div>
-                  <div class="cm-ob-right">
-                    <div class="cm-ob-amt">$24,800</div>
-                    <div class="cm-ob-badge confirmed">confirmed</div>
-                  </div>
-                </div>
-                <div class="cm-ob-row">
-                  <div class="cm-ob-dot" style="background:#dc2626"></div>
-                  <div class="cm-ob-content">
-                    <div class="cm-ob-title">Due Diligence Fee</div>
-                    <div class="cm-ob-meta">Arredondo Capital · Mar 22, 2026</div>
-                  </div>
-                  <div class="cm-ob-right">
-                    <div class="cm-ob-amt">$5,000</div>
-                    <div class="cm-ob-badge overdue">overdue</div>
-                  </div>
-                </div>
-                <div class="cm-ob-row">
-                  <div class="cm-ob-dot" style="background:#b38600"></div>
-                  <div class="cm-ob-content">
-                    <div class="cm-ob-title">Closing Payment</div>
-                    <div class="cm-ob-meta">Arredondo Capital · Apr 15, 2026</div>
-                  </div>
-                  <div class="cm-ob-right">
-                    <div class="cm-ob-amt">$1,210,200</div>
-                    <div class="cm-ob-badge pending">pending</div>
-                  </div>
-                </div>
-              </div>
-
-            </div><!-- /cm-content -->
-          </div><!-- /cm-dash -->
-
-          <!-- Right toolbar: 52px icon bar, B&W only -->
-          <div class="cm-toolbar">
-            <div class="cm-tool-btn active">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            </div>
-            <div class="cm-tool-btn">
-              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-            </div>
-            <div class="cm-tool-btn">
-              <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            </div>
-          </div>
-
-        </div><!-- /cm-main -->
-      </div><!-- /cm-body -->
-    </div><!-- /cm-frame -->
-  </div><!-- /cm-wrap -->
+        <iframe src="../assets/videos/The%20Bull%20Contracts%20Video.html" title="The Bull Contracts — launch video" style="width:100%;height:100%;border:none;display:block;" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
 
   <!-- ── HOW IT WORKS ── -->
   <section id="how">
@@ -1400,7 +1278,54 @@
         <div class="step-desc">Deadline approaching? The platform emails the right party. Payment overdue? The lawyer gets an alert. Zero manual follow-up.</div>
       </div>
     </div>
+
+    <div class="process-shot">
+      <div class="carousel-slide active">
+        <img src="../assets/mockups/contracts-overview.png" alt="Contracts – dashboard overview">
+      </div>
+      <div class="carousel-slide">
+        <img src="../assets/mockups/contracts-carousel-overview.png" alt="Contracts – contract overview">
+      </div>
+      <div class="carousel-slide">
+        <img src="../assets/mockups/contracts-carousel-obligations.png" alt="Contracts – obligations">
+      </div>
+      <div class="carousel-slide">
+        <img src="../assets/mockups/contracts-carousel-nexus.png" alt="Contracts – nexus graph">
+      </div>
+      <button class="carousel-arrow prev" id="process-carousel-prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="carousel-arrow next" id="process-carousel-next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+    <div class="carousel-nav">
+      <button class="carousel-dot active" data-slide="0" aria-label="Dashboard overview"></button>
+      <button class="carousel-dot" data-slide="1" aria-label="Contract overview"></button>
+      <button class="carousel-dot" data-slide="2" aria-label="Obligations"></button>
+      <button class="carousel-dot" data-slide="3" aria-label="Nexus"></button>
+    </div>
   </section>
+
+  <script>
+  (function() {
+    var root = document.querySelector('.process-shot');
+    var slides = root.querySelectorAll('.carousel-slide');
+    var dots = document.querySelectorAll('#how .carousel-dot');
+    var current = 0;
+
+    function goTo(n) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() { goTo(+dot.dataset.slide); });
+    });
+
+    document.getElementById('process-carousel-prev').addEventListener('click', function() { goTo(current - 1); });
+    document.getElementById('process-carousel-next').addEventListener('click', function() { goTo(current + 1); });
+  })();
+  </script>
 
   <!-- ── WHO IT'S FOR ── -->
   <section id="who">
